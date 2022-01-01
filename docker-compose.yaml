@@ -1,0 +1,22 @@
+version: "3"
+services:
+
+  wordpress:
+    container_name: wordpress
+    image: docker.io/wordpress
+    ports:
+      - 8080:80
+    environtment:
+      WORDPRESS_DB_HOST: mysql-server
+      WORDPRESS_DB_USER: root
+      # This value has to be the same as MYSQL_ROOT_PASSWORD
+      WORDPRESS_DB_PASSWORD: GT/4=8Dy.*G{Cztx
+      
+  mysql:
+    container_name: mysql-server
+    image: docker.io/mysql/mysql-server:8.0
+    ports:
+      - 3306:3306
+    environment:
+      # This value has to be the same as WORDPRESS_DB_PASSWORD
+      MYSQL_ROOT_PASSWORD: GT/4=8Dy.*G{Cztx
