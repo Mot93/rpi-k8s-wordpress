@@ -1,22 +1,39 @@
 version: "3"
-services:
 
-  wordpress:
-    container_name: wordpress
-    image: docker.io/wordpress
-    ports:
-      - 8080:80
-    environtment:
-      WORDPRESS_DB_HOST: mysql-server
-      WORDPRESS_DB_USER: root
-      # This value has to be the same as MYSQL_ROOT_PASSWORD
-      WORDPRESS_DB_PASSWORD: GT/4=8Dy.*G{Cztx
+services:
       
-  mysql:
+  db:
     container_name: mysql-server
     image: docker.io/mysql/mysql-server:8.0
     ports:
       - 3306:3306
+    restart: always
+    volumes:
+      - db_data:/var/lib/mysql
     environment:
-      # This value has to be the same as WORDPRESS_DB_PASSWORD
       MYSQL_ROOT_PASSWORD: GT/4=8Dy.*G{Cztx
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      # This value has to be the same as WORDPRESS_DB_PASSWORD
+      MYSQL_PASSWORD: ddyXnZymPNFGu9
+
+  wordpress:
+    depends_on:
+      - db
+    container_name: wordpress
+    image: docker.io/wordpress
+    ports:
+      - 8080:80
+    restart: always
+    volumes:
+      - wordpress_data:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress
+      WORDPRESS_DB_USER: wordpress
+      # This value has to be the same as MYSQL_PASSWORD
+      WORDPRESS_DB_PASSWORD: ddyXnZymPNFGu9
+
+volumes:
+  db_data: {}
+  wordpress_data: {}
