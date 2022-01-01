@@ -6,9 +6,9 @@ This project contains everything needed to run wordpress and it's database on ku
 # docker-compose.yaml
 This `docker-compose` contains the description of all the component needed to setup the wordpress.
 
+## How to use docker-compose with podman-compose
 **NOTE**: podman-compose volumes are currently broken
 
-## How to use docker-compose
 1. Build all the necessary images
 
         podman-compose -p wp build
@@ -29,6 +29,7 @@ Just replace `podman-compose` with `docker-compose`.
 **NOTE**: unlike `docker-compose` all container are place in a virtual network and can listen on the same port.
 
 # Moving to K8s
+Now that the `docker-compose` works as intended we can migrate to kubernetes.
 
 ## Using `podman-compose`
 [podman-compose](https://github.com/containers/podman-compose) is a great projects that turn your [docker-compose.yaml](https://docs.docker.com/compose/compose-file/) into a pod ready to be used on k8s.
