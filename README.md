@@ -31,6 +31,10 @@ Just replace `podman-compose` with `docker-compose`.
 # Moving to K8s
 Now that the `docker-compose` works as intended we can migrate to kubernetes.
 
+There are several ways to do it, each is documented below.
+
+The tool used for the final project is `kompose`.
+
 ## Using `podman-compose`
 [podman-compose](https://github.com/containers/podman-compose) is a great projects that turn your [docker-compose.yaml](https://docs.docker.com/compose/compose-file/) into a pod ready to be used on k8s.
 
@@ -62,6 +66,33 @@ To test the generate config file, use [kubeval](https://www.kubeval.com).
     kubeval kompose/jenkins-deployment.yaml
     kubeval kompose/jenkins-service.yaml
 
+# Additional configuration
+Kompose doesn't creates secrets, ingress or namespace.
+
+Because of that we have to create the files: `db-secret.yaml`, `wordpress-ingress.yaml` and `namespace.yaml`
+
+## Secret
+After creating the file `db-secret.yaml` add to both the deployment:
+
+    valueFrom:
+      secretKeyRef:
+        name: db-secret
+          key: <insert key here>
+
+for both the values `MYSQL_PASSWORD` and `MYSQL_PASSWORD`.
+
+## Ingress
+Once the config file `wordpress-ingress.yaml` is created, remember to update your DNS config. Either locally or network wise.
+
+## Namespace
+Grouping all the resources in the same namespace is foundamental.
+It allows to keep the cluster clean and organized.
+Remember to update each resource metadata with the namespace tag:
+
+    namespace: wordpress
+
+**NOTE**: the db takes sometime to initiate, if prompted with the error "Error establishing a database connection", wait 5 or 10 minutes and try again.
+
 # K8s testing
 There are serveral way to test the kubernetes configurations
 
@@ -76,3 +107,8 @@ To apply to k8s the configuration:
 Podman offers to run some of the kubernetes configurations via `podman play` tool:
 
     podman play kube <kubernetes config>
+
+# Bash
+The file `k8s-wordpress-deploy.sh` will deploy all the config files and the file `k8s-wordpress-dismantle.sh` will delete all the resources from the cluster and the local files.
+
+
