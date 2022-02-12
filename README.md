@@ -114,7 +114,7 @@ The file `k8s-wordpress-deploy.sh` will deploy all the config files and the file
 License
 -------
 
-Pending
+MIT
 
 Author Information
 ------------------
