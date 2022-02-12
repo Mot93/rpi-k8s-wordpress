@@ -111,4 +111,13 @@ Podman offers to run some of the kubernetes configurations via `podman play` too
 # Bash
 The file `k8s-wordpress-deploy.sh` will deploy all the config files and the file `k8s-wordpress-dismantle.sh` will delete all the resources from the cluster and the local files.
 
+License
+-------
 
+Pending
+
+Author Information
+------------------
+
+If you like my work and want to know more, visit my website:
+[www.mattiarubini.com](https://www.mattiarubini.com)
